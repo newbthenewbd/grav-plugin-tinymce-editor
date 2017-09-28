@@ -1,0 +1,17 @@
+{% block field %}
+	<div class="form-field {{ field.classes|default('') }}">
+		<div class="form-data">
+			<textarea
+				class="tinymce"
+				name="{{ (scope ~ field.name)|fieldName }}"
+				{% if field.disabled or isDisabledToggleable %}disabled="disabled"{% endif %}
+				{% if field.placeholder %}placeholder="{{ field.placeholder|tu }}"{% endif %}
+				{% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
+				{% if field.novalidate in ['on', 'true', 1] %}novalidate="novalidate"{% endif %}
+				{% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
+				{% if field.validate.required in ['on', 'true', 1] %}required="required"{% endif %}
+			>{{ value|join("\n")|e("html") }}</textarea>
+		</div>
+	</div>
+	<script>var lang=window.GravAdmin.config.language;if(lang === "en")lang="en_GB";else if(lang === "hu")lang="hu_HU";tinymce.init({selector:"textarea.tinymce",language_url:"{{ url("plugin://tinymce-editor/js/tinymce/langs") }}" + "/" + lang + ".js",plugins:"{{ config.plugins["tinymce-editor"].plugins|join(" ")|e("js") }}",{% for key in config.plugins["tinymce-editor"].parameters|keys %}"{{ config.plugins["tinymce-editor"].parameters[key].name|e("js") }}":"{{ config.plugins["tinymce-editor"].parameters[key].value|e("js") }}",{% endfor %}menubar:{% if config.plugins["tinymce-editor"].menubar %}true{% else %}false{% endif %},menu:{ {% for key in config.plugins["tinymce-editor"].menu|keys %}{{ key }}:{title:"{{ config.plugins["tinymce-editor"].menu[key].title|e("js") }}",items:"{{ config.plugins["tinymce-editor"].menu[key].items|e("js") }}"},{% endfor %}},toolbar:[{% for fields in config.plugins["tinymce-editor"].toolbar %}{% for row in fields %}'{{ row|e("js") }}',{% endfor %}{% endfor %}],branding:{% if config.plugins["tinymce-editor"].branding %}true{% else %}false{% endif %},statusbar:{% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %}});</script>
+{% endblock %}

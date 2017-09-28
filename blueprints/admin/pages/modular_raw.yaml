@@ -1,0 +1,16 @@
+title: PLUGIN_ADMIN.DEFAULT
+'@extends':
+    type: modular_raw
+    context: blueprints://admin/pages
+
+form:
+  fields:
+    tabs:
+      fields:
+        content:
+          fields:
+            unset-uploads@: true
+            content:
+              type: tinymce
+              validate:
+                type: textarea
