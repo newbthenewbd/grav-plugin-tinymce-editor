@@ -110,7 +110,6 @@ Thanks to those the plugin was originally made for – my family with their webs
 
 Last but not least, ~~free tanks~~ many thanks to [the very important person hiding behind this noble nickname on GitHub](https://github.com/Buttpants) for staying ~~sane~~ patient while I've been ~~wasting a huge amount of time~~ creating this plugin.
 ## To Do
-- [ ] Ensure all of the language shortcodes work, and when they do not, convert them in `tinymce.html.twig`
 - [ ] Make the page editor's file picker output HTML instead of Markdown and readd it to the interface
 - [ ] Add more translations to languages.yaml
 - [x] ???
