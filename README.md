@@ -100,7 +100,7 @@ statusbar: true # If enabled, a status bar will be present at the bottom of the 
 ## Usage
 **NOTE:** It is recommended to disable the Markdown parser in `/user/config/system.yaml` or under **Configuration** > **System** in the admin plugin to lower the resource usage once this plugin has been installed.
 
-The plugin itself is ready to be used out of the box, set up with a sensible default configuration. It will replace all the Markdown page editor fields in the admin plugin with TinyMCE and remove the file picker fields from them, as TinyMCE provides this sort of functionality natively.
+The plugin itself is ready to be used out of the box, set up with a sensible default configuration. It will replace all the Markdown page editor fields in the admin plugin with TinyMCE.
 ## Credits
 Many thanks to everyone involved in the creation of [TinyMCE](https://github.com/tinymce/tinymce), the only FOSS WYSIWYG HTML editor that can actually do just what is expected of it with a little configuration. It is located under `/tinymce-editor/js/tinymce`, with all the languages available for it at the time of the latest integration plugin release located under `/tinymce-editor/js/tinymce/langs`.
 
