@@ -9,7 +9,6 @@ form:
       fields:
         content:
           fields:
-            unset-uploads@: true
             content:
               type: tinymce
               validate:
