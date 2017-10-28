@@ -1,3 +1,9 @@
+# v1.1.1
+##  28-10-2017
+
+1. [](#improved)
+    * Improved the file picker's URL handling
+
 # v1.1.0
 ##  04-10-2017
 
