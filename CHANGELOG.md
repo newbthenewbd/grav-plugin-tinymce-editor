@@ -1,3 +1,9 @@
+# v1.1.2
+##  01-11-2017
+
+1. [](#bugfix)
+    * Fixed boolean values in parameters
+
 # v1.1.1
 ##  28-10-2017
 
