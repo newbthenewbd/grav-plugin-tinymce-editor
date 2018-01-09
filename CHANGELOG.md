@@ -1,3 +1,9 @@
+# v1.1.3
+##  10-01-2018
+
+1. [](#improved)
+    * Improved modular page handling
+
 # v1.1.2
 ##  01-11-2017
 
