@@ -1,3 +1,9 @@
+# v1.1.5
+##  11-01-2018
+
+1. [](#bugfix)
+    * Worked around GPM quirkyness, hopefully
+
 # v1.1.4
 ##  10-01-2018
 
