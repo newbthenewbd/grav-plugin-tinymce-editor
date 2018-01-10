@@ -1,3 +1,9 @@
+# v1.1.4
+##  10-01-2018
+
+1. [](#bugfix)
+    * Removed calls to a rarely available JavaScript function
+
 # v1.1.3
 ##  10-01-2018
 
