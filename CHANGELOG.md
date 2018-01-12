@@ -1,3 +1,9 @@
+# v1.1.6
+##  12-01-2018
+
+1. [](#bugfix)
+    * Improved modular page handling again
+
 # v1.1.5
 ##  11-01-2018
 
