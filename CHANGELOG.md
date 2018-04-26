@@ -1,3 +1,9 @@
+# v1.1.8
+##  26-04-2018
+
+1. [](#improved)
+    * Improved parameter handling
+
 # v1.1.7
 ##  05-02-2018
 
