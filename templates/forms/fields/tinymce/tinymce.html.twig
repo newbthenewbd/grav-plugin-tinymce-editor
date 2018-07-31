@@ -40,7 +40,11 @@
 					statusbar: {% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %},
 					block_formats: "{{ config.plugins["tinymce-editor"].block_formats|e("js") }}",
 					style_formats: {{ config.plugins["tinymce-editor"].style_formats|json_encode()|raw }},
-					content_css: "{% if config.theme.tinymce_styles %}{{ theme_url }}{{ config.theme.tinymce_styles }}{% endif %}"
+					content_css: "{% if config.theme.tinymce_styles %}{{ theme_url }}{{ config.theme.tinymce_styles }}{% endif %}",
+					invalid_elements: "span",
+					extended_valid_elements: "span[!class]",
+					invalid_styles: {
+					}
 				})
 			};
 			var langs="{{ url("plugin://tinymce-editor/js/tinymce/langs") }}/";
