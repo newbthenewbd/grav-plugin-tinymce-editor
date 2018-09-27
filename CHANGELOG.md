@@ -1,3 +1,15 @@
+# v1.2.0
+##  27-09-2018
+
+1. [](#new)
+    * Added a persistable method of modifying the plugin's files
+2. [](#improved)
+    * Updated TinyMCE to 4.8.3
+    * Improved modular page media handling
+    * Improved default configuration
+3. [](#bugfix)
+    * Got bugged one time too many, `tinymce.html.twig` is unminified now
+
 # v1.1.8
 ##  26-04-2018
 
