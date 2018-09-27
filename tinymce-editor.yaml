@@ -3,6 +3,7 @@ apikey: ''
 plugins:
   - advlist
   - anchor
+  - autoresize
   - charmap
   - code
   - colorpicker
@@ -25,6 +26,9 @@ plugins:
   - visualchars
   - wordcount
 parameters:
+  -
+    name: convert_urls
+    value: '0'
   -
     name: fontsize_formats
     value: '6pt 7pt 8pt 9pt 10pt 11pt 12pt 13pt 14pt 15pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 32pt 36pt 40pt 44pt 48pt 54pt 60pt 66pt 72pt 80pt 88pt 96pt'
