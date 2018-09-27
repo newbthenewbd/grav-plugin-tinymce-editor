@@ -24,6 +24,7 @@
 			function run() {
 				tinymce.init({
 					selector:"textarea.tinymce",
+					convert_urls:false,
 					document_base_url:$("[id=grav-dropzone]").attr("data-media-local")+"/../"+(""{% if context.modular %}+"../"{% endif %}),
 					language_url:lang != "" ? langs + lang + ".js" : "",
 					plugins:"{{ config.plugins["tinymce-editor"].plugins|join(" ")|e("js") }}",
