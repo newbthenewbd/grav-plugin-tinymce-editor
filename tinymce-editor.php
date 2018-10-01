@@ -12,7 +12,7 @@ class TinyMCEEditorPlugin extends Plugin {
 		$page = $event['object'];
 		if($page instanceof Page && $page->folder() != $page->getOriginal()->folder() && $page->rawMarkdown() != "") {
 			$newdir = explode(".", $page->folder());
-			$newdir = $page->parent()->route() . "/" . end($newdir) . "/";
+			$newdir = $this->grav["uri"]->rootUrl() . $page->parent()->route() . "/" . end($newdir) . "/";
 			$dom = new \DOMDocument("1.0", "UTF-8");
 			$dom->loadHTML(mb_convert_encoding($page->rawMarkdown(), "HTML-ENTITIES", "UTF-8"), LIBXML_HTML_NODEFDTD | LIBXML_PARSEHUGE);
 			foreach($page->getOriginal()->media()->all() as $key => $value) {
@@ -21,7 +21,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == $page->getOriginal()->route() . "/" . $key . $query) {
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
 						$tag->setAttribute("src", $newdir . $key . $query);
 					}
 				}
@@ -30,7 +30,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == $page->getOriginal()->route() . "/" . $key . $query) {
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
 						$tag->setAttribute("src", $newdir . $key . $query);
 					}
 				}
@@ -39,7 +39,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("href") == $page->getOriginal()->route() . "/" . $key . $query) {
+					if($tag->getAttribute("href") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
 						$tag->setAttribute("href", $newdir . $key . $query);
 					}
 				}
