@@ -1,3 +1,9 @@
+# v1.2.1
+##  01-10-2018
+
+1. [](#bugfix)
+    * Fixed the handling of Grav installs in subdirectories
+
 # v1.2.0
 ##  27-09-2018
 
