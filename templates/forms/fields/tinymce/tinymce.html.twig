@@ -17,89 +17,65 @@
 				{% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
 				{% if field.validate.required in ['on', 'true', 1] %}required="required"{% endif %}
 			>{{ value|join("\n")|e("html") }}</textarea>
+			{{ "lol" }}
 		</div>
 	</div>
 	<script>
-		(function() {
-			function run() {
-				tinymce.init({
-					selector:"textarea.tinymce",
-					convert_urls:false,
-					document_base_url:$("[id=grav-dropzone]").attr("data-media-local")+"/../"+(""{% if context.modular %}+"../"{% endif %}),
-					language_url:lang != "" ? langs + lang + ".js" : "",
-					plugins:"{{ config.plugins["tinymce-editor"].plugins|join(" ")|e("js") }}",
-					{% for key in config.plugins["tinymce-editor"].parameters|keys %}
-						"{{ config.plugins["tinymce-editor"].parameters[key].name|e("js") }}":function(x) {
-							try{return JSON.parse(x)}catch(e){return x}
-						}("{{ config.plugins["tinymce-editor"].parameters[key].value|e("js") }}"),
-					{% endfor %}
-					menubar:{% if config.plugins["tinymce-editor"].menubar %}true{% else %}false{% endif %},
-					menu:{
-						{% for key in config.plugins["tinymce-editor"].menu|keys %}
-							{{ key }}:{
-								title:"{{ config.plugins["tinymce-editor"].menu[key].title|e("js") }}",
-								items:"{{ config.plugins["tinymce-editor"].menu[key].items|e("js") }}"
-							},
-						{% endfor %}
+		tinymce.init({
+			selector:"textarea.tinymce",
+			convert_urls:false,
+			document_base_url:$("[id=grav-dropzone]").attr("data-media-local")+"/../"+(""{% if context.modular %}+"../"{% endif %}),
+			language_url:"{{ url('user://data/tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '.js')|default(url('user://data/tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')|default(url('plugins://tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '.js')|default(url('plugins://tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')))) }}",
+			plugins:"{{ config.plugins["tinymce-editor"].plugins|join(" ")|e("js") }}",
+			{% for key in config.plugins["tinymce-editor"].parameters|keys %}
+				"{{ config.plugins["tinymce-editor"].parameters[key].name|e("js") }}":function(x) {
+					try{return JSON.parse(x)}catch(e){return x}
+				}("{{ config.plugins["tinymce-editor"].parameters[key].value|e("js") }}"),
+			{% endfor %}
+			menubar:{% if config.plugins["tinymce-editor"].menubar %}true{% else %}false{% endif %},
+			menu:{
+				{% for key in config.plugins["tinymce-editor"].menu|keys %}
+					{{ key }}:{
+						title:"{{ config.plugins["tinymce-editor"].menu[key].title|e("js") }}",
+						items:"{{ config.plugins["tinymce-editor"].menu[key].items|e("js") }}"
 					},
-					toolbar:[
-						{% for fields in config.plugins["tinymce-editor"].toolbar %}
-							{% for row in fields %}
-								'{{ row|e("js") }}',
-							{% endfor %}
-						{% endfor %}
-					],
-					branding:{% if config.plugins["tinymce-editor"].branding %}true{% else %}false{% endif %},
-					statusbar:{% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %}
-				});
-			}
-			function query() {
-				$.get(langs + lang + ".js").done(function() {
-					run();
-				}).fail(function() {
-					lang += "_" + lang.toUpperCase();
-					$.get(langs + lang + ".js").done(function() {
-						run();
-					}).fail(function() {
-						lang = "";
-						run();
-					});
-				});
-			}
-			var langs = "{{ url('plugins://') }}/../data/tinymce-editor/js/tinymce/langs/";
-			var lang = GravAdmin.config.language;
-			$.get("{{ url('plugins://') }}/../data/tinymce-editor/js/tinymce/tinymce.min.js").done(function() {
-				query();
-			}).fail(function() {
-				langs = "{{ url('plugins://tinymce-editor/js/tinymce/langs') }}/";
-				query();
-			});
-			$(window).on("load", function() {
-				$("div.dropzone").on("click", "a.dz-insert", function() {
-					var dir = $("[id=grav-dropzone]").attr("data-media-local")+"/";
-					var safedir = $("[id=grav-dropzone]").attr("data-media-path")+"/";
-					var src = $(this).parent().find("[data-dz-name]").text();
-					var file = new Image();
+				{% endfor %}
+			},
+			toolbar:[
+				{% for fields in config.plugins["tinymce-editor"].toolbar %}
+					{% for row in fields %}
+						'{{ row|e("js") }}',
+					{% endfor %}
+				{% endfor %}
+			],
+			branding:{% if config.plugins["tinymce-editor"].branding %}true{% else %}false{% endif %},
+			statusbar:{% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %}
+		});
+		$(window).on("load", function() {
+			$("div.dropzone").on("click", "a.dz-insert", function() {
+				var dir = $("[id=grav-dropzone]").attr("data-media-local")+"/";
+				var safedir = $("[id=grav-dropzone]").attr("data-media-path")+"/";
+				var src = $(this).parent().find("[data-dz-name]").text();
+				var file = new Image();
+				file.onload = function() {
+					$("[aria-label='Insert/edit image'] button").click();
+					$("div.mce-window input.mce-textbox:first").val(dir+src);
+				};
+				file.onerror = function() {
+					file = new Audio();
 					file.onload = function() {
-						$("[aria-label='Insert/edit image'] button").click();
+						tinyMCE.activeEditor.plugins.media.showDialog();
 						$("div.mce-window input.mce-textbox:first").val(dir+src);
 					};
 					file.onerror = function() {
-						file = new Audio();
-						file.onload = function() {
-							tinyMCE.activeEditor.plugins.media.showDialog();
-							$("div.mce-window input.mce-textbox:first").val(dir+src);
-						};
-						file.onerror = function() {
-							$("[aria-label='Insert/edit link'] button").click();
-							$("div.mce-window input.mce-textbox:eq(1)").val(src);
-							$("div.mce-window input.mce-textbox:first").val(dir+src);
-						};
-						file.src = safedir+src;
+						$("[aria-label='Insert/edit link'] button").click();
+						$("div.mce-window input.mce-textbox:eq(1)").val(src);
+						$("div.mce-window input.mce-textbox:first").val(dir+src);
 					};
 					file.src = safedir+src;
-				});
+				};
+				file.src = safedir+src;
 			});
-		}());
+		});
 	</script>
 {% endblock %}

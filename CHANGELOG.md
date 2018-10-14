@@ -1,3 +1,10 @@
+# v1.2.2
+##  15-10-2018
+
+1. [](#improved)
+    * Improved the method used for TinyMCE path lookups
+    * Removed a debug check from the code that was previously overlooked
+
 # v1.2.1
 ##  01-10-2018
 

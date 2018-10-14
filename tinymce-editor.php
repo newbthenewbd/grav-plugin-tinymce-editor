@@ -53,9 +53,8 @@ class TinyMCEEditorPlugin extends Plugin {
 	}
 	public function onPluginsInitialized() {
 		if($this->isAdmin()) {
-			$this->grav["locator"]->addPath("data", "", DATA_DIR);
-			if(file_exists(DATA_DIR . "/tinymce-editor/blueprints")) {
-				$this->grav["locator"]->addPath("blueprints", "", DATA_DIR . "/tinymce-editor/blueprints");
+			if(file_exists(__DIR__ . "/../../data/tinymce-editor/blueprints")) {
+				$this->grav["locator"]->addPath("blueprints", "", __DIR__ . "/../../data/tinymce-editor/blueprints");
 			} else {
 				$this->grav["locator"]->addPath("blueprints", "", __DIR__ . "/blueprints");
 			}
@@ -63,8 +62,8 @@ class TinyMCEEditorPlugin extends Plugin {
 		}
 	}
 	public function onTwigTemplatePaths() {
-		if(file_exists(DATA_DIR . "/tinymce-editor/templates")) {
-			$this->grav["twig"]->twig_paths[] = DATA_DIR . "/tinymce-editor/templates";
+		if(file_exists(__DIR__ . "/../../data/tinymce-editor/templates")) {
+			$this->grav["twig"]->twig_paths[] = __DIR__ . "/../../data/tinymce-editor/templates";
 		} else {
 			$this->grav["twig"]->twig_paths[] = __DIR__ . "/templates";
 		}
@@ -72,7 +71,7 @@ class TinyMCEEditorPlugin extends Plugin {
 	public function onTwigSiteVariables() {
 		if($this->isAdmin() && strpos($this->grav["uri"]->route(), $this->config["plugins"]["admin"]["route"] . "/pages/") !== false) {
 			if($this->config["plugins"]["tinymce-editor"]["apikey"] === "") {
-				if(file_exists(DATA_DIR . "/tinymce-editor/js/tinymce")) {
+				if(file_exists(__DIR__ . "/../../data/tinymce-editor/js/tinymce")) {
 					$this->grav["assets"]->add("user://data/tinymce-editor/js/tinymce/tinymce.min.js");
 				} else {
 					$this->grav["assets"]->add("plugin://tinymce-editor/js/tinymce/tinymce.min.js");
@@ -80,7 +79,7 @@ class TinyMCEEditorPlugin extends Plugin {
 			} else {
 				$this->grav["assets"]->add("https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=" . urlencode($this->config["plugins"]["tinymce-editor"]["apikey"]));
 			}
-			if(file_exists(DATA_DIR . "/tinymce-editor/css")) {
+			if(file_exists(__DIR__ . "/../../data/tinymce-editor/css")) {
 				$this->grav["assets"]->add("user://data/tinymce-editor/css/editor.css");
 			} else {
 				$this->grav["assets"]->add("plugin://tinymce-editor/css/editor.css");
