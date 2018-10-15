@@ -1,3 +1,9 @@
+# v1.2.3
+##  15-10-2018
+
+1. [](#improved)
+    * Removed a sillier overlooked debug check that magically appeared in v1.2.2
+
 # v1.2.2
 ##  15-10-2018
 

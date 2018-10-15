@@ -17,7 +17,6 @@
 				{% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
 				{% if field.validate.required in ['on', 'true', 1] %}required="required"{% endif %}
 			>{{ value|join("\n")|e("html") }}</textarea>
-			{{ "lol" }}
 		</div>
 	</div>
 	<script>
