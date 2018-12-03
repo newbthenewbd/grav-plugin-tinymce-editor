@@ -1,3 +1,9 @@
+# v1.2.4
+##  03-12-2018
+
+1. [](#bugfix)
+    * Fixed the handling of libxml versions older than 2.7.8
+
 # v1.2.3
 ##  15-10-2018
 
