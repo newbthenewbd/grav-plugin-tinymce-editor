@@ -1,3 +1,9 @@
+# v1.2.5
+##  14-12-2018
+
+1. [](#bugfix)
+    * Fixed the handling of what libxml considers to be invalid tags
+
 # v1.2.4
 ##  03-12-2018
 

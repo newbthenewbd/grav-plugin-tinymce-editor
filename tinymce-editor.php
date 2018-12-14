@@ -14,7 +14,7 @@ class TinyMCEEditorPlugin extends Plugin {
 			$newdir = explode(".", $page->folder());
 			$newdir = $this->grav["uri"]->rootUrl() . $page->parent()->route() . "/" . end($newdir) . "/";
 			$dom = new \DOMDocument("1.0", "UTF-8");
-			$dom->loadHTML(mb_convert_encoding($page->rawMarkdown(), "HTML-ENTITIES", "UTF-8"), LIBXML_PARSEHUGE);
+			@$dom->loadHTML(mb_convert_encoding($page->rawMarkdown(), "HTML-ENTITIES", "UTF-8"), LIBXML_PARSEHUGE);
 			foreach($page->getOriginal()->media()->all() as $key => $value) {
 				foreach($dom->getElementsByTagName("img") as $tag) {
 					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
