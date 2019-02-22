@@ -69,7 +69,7 @@ class TinyMCEEditorPlugin extends Plugin {
 		}
 	}
 	public function onTwigSiteVariables() {
-		if($this->isAdmin() && strpos($this->grav["uri"]->route(), $this->config["plugins"]["admin"]["route"] . "/pages/") !== false) {
+		if($this->isAdmin()) {
 			if($this->config["plugins"]["tinymce-editor"]["apikey"] === "") {
 				if(file_exists(__DIR__ . "/../../data/tinymce-editor/js/tinymce")) {
 					$this->grav["assets"]->add("user://data/tinymce-editor/js/tinymce/tinymce.min.js");

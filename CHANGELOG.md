@@ -1,3 +1,9 @@
+# v1.2.6
+##  22-02-2019
+
+1. [](#bugfix)
+    * Fixed the handling of tinymce fields unrelated to pages
+
 # v1.2.5
 ##  14-12-2018
 
