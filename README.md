@@ -31,13 +31,14 @@ You should now have all the plugin files under `/user/plugins/tinymce-editor`.
 
 Before configuring this plugin, you should copy the `/user/plugins/tinymce-editor/tinymce-editor.yaml` file to `/user/config/plugins` and only edit that copy.
 
-Here is the default configuration and an explanation of available options:
+This is the default configuration and an explanation of available options:
 ```yaml
 enabled: true
 apikey: '' # The API key to use with TinyMCE Cloud. If empty, local copy of TinyMCE will be used
 plugins: # The plugins to load with TinyMCE
   - advlist
   - anchor
+  - autoresize
   - charmap
   - code
   - colorpicker
@@ -97,24 +98,25 @@ toolbar: # The toolbar layout for TinyMCE to use
 branding: false # If enabled, a "Powered by TinyMCE" branding will be present at the bottom of the editor
 statusbar: true # If enabled, a status bar will be present at the bottom of the editor
 ```
+When more customization is desired than the above options allow, you may create a directory called `tinymce-editor` in `/user/data`, and copy a subset of `/user/plugins/tinymce-editor` in there. The changes to the contents of that directory will be reflected in the plugin's behavior, and they will not be affected by updates. Currently supported subsets are the directories `blueprints`, `css`, `js/tinymce` and `templates`, and their entire contents should, when needed, be copied to `/user/data/tinymce-editor/blueprints`, `/user/data/tinymce-editor/css`, `/user/data/tinymce-editor/js/tinymce` and `/user/data/tinymce-editor/templates`, respectively.
 ## Usage
 **NOTE:** It is recommended to disable the Markdown parser in `/user/config/system.yaml` or under **Configuration** > **System** in the admin plugin to lower the resource usage once this plugin has been installed.
 
 The plugin itself is ready to be used out of the box, set up with a sensible default configuration. It will replace all the Markdown page editor fields in the admin plugin with TinyMCE.
 ## Credits
-Many thanks to everyone involved in the creation of [TinyMCE](https://github.com/tinymce/tinymce), the only FOSS WYSIWYG HTML editor that can actually do just what is expected of it with a little configuration. It is located under `/tinymce-editor/js/tinymce`, with all the languages available for it at the time of the latest integration plugin release located under `/tinymce-editor/js/tinymce/langs`.
+Many thanks to everyone involved in the creation of [TinyMCE](https://github.com/tinymce/tinymce), the only FOSS HTML WYSIWYG editor that can actually do just what is expected of it with a little configuration. It is located under `/tinymce-editor/js/tinymce`, with all the languages available for it at the time of the latest integration plugin release installed under `/tinymce-editor/js/tinymce/langs`.
 
-Huge thanks to the [Grav Slack Chat community](https://getgrav.org/slack) for providing help with Grav whenever it is possible, and to those involved in the creation of Grav, a CMS with an actually beautiful architecture.
+Huge thanks to the [Grav Slack Chat community](https://getgrav.org/slack) for providing help with Grav whenever possible, and to those involved in the creation of Grav, a CMS with an actually beautiful architecture.
 
 Thanks to those the plugin was originally made for – my family with their websites – and to those others who may now use it as well.
 
-Last but not least, ~~free tanks~~ many thanks to [the very important person hiding behind this noble nickname on GitHub](https://github.com/Buttpants) for staying ~~sane~~ patient while I've been ~~wasting a huge amount of time~~ creating this plugin.
+Last but not least, ~free tanks~ many thanks to [the very important person hiding behind this noble nickname on GitHub](https://github.com/Buttpants) for ~keeping sanity~ staying understanding while I've been unresponsive ~wasting a huge amount of time~ creating this plugin.
 ## To Do
 - [ ] Add more translations to languages.yaml
 - [x] ???
 - [x] That's it!
 
-## ~~Nagging for~~ Donations
+## ~Nagging for~ Donations
 > **Do you perhaps feel awesome,  
 > and happen to sleep on mone?  
 > Drop some, feel more awesome!**\*
@@ -124,4 +126,3 @@ Last but not least, ~~free tanks~~ many thanks to [the very important person hid
 *No, really, there are no perks associated with donating aside from the increased self-awesomeness, though our self-awesomeness will be increased too!
 ## Random Disclaimers
 "TINYMCE" is a registered trademark and brand of Moxiecode Systems AB.
-

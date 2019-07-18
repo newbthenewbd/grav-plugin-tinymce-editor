@@ -3,6 +3,7 @@ apikey: ''
 plugins:
   - advlist
   - anchor
+  - autoresize
   - charmap
   - code
   - colorpicker

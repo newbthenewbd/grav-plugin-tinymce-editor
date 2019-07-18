@@ -1,3 +1,52 @@
+# v1.2.6
+##  22-02-2019
+
+1. [](#bugfix)
+    * Fixed the handling of tinymce fields unrelated to pages
+
+# v1.2.5
+##  14-12-2018
+
+1. [](#bugfix)
+    * Fixed the handling of what libxml considers to be invalid tags
+
+# v1.2.4
+##  03-12-2018
+
+1. [](#bugfix)
+    * Fixed the handling of libxml versions older than 2.7.8
+
+# v1.2.3
+##  15-10-2018
+
+1. [](#improved)
+    * Removed a sillier overlooked debug check that magically appeared in v1.2.2
+
+# v1.2.2
+##  15-10-2018
+
+1. [](#improved)
+    * Improved the method used for TinyMCE path lookups
+    * Removed a debug check from the code that was previously overlooked
+
+# v1.2.1
+##  01-10-2018
+
+1. [](#bugfix)
+    * Fixed the handling of Grav installs in subdirectories
+
+# v1.2.0
+##  27-09-2018
+
+1. [](#new)
+    * Added a persistable method of modifying the plugin's files
+2. [](#improved)
+    * Updated TinyMCE to 4.8.3
+    * Improved modular page media handling
+    * Improved default configuration
+3. [](#bugfix)
+    * Got bugged one time too many, `tinymce.html.twig` is unminified now
+
 # v1.1.8
 ##  26-04-2018
 

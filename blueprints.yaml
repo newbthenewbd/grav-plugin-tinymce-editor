@@ -1,12 +1,12 @@
 name: TinyMCE Editor Integration
-version: 1.1.8
+version: 1.2.6
 description: This is _the_ TinyMCE integration plugin for those not chosen to love Markdown over all comfort.
 icon: edit
 author:
   name: Newb I the Newbd
   url: https://github.com/newbthenewbd
 homepage: https://github.com/newbthenewbd/grav-plugin-tinymce-editor
-keywords: tinymce, wysiwyg, editor, integration, plugin
+keywords: tinymce, html, wysiwyg, editor, integration, plugin
 bugs: https://github.com/newbthenewbd/grav-plugin-tinymce-editor/issues
 docs: https://github.com/newbthenewbd/grav-plugin-tinymce-editor/blob/develop/README.md
 license: Integration plugin under the MIT License, TinyMCE under LGPL 2.1
