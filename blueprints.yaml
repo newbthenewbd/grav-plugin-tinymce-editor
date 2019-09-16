@@ -12,7 +12,7 @@ docs: https://github.com/newbthenewbd/grav-plugin-tinymce-editor/blob/develop/RE
 license: Integration plugin under the MIT License, TinyMCE under LGPL 2.1
 
 form:
-  validation: strict
+  validation: loose
   fields:
     enabled:
       type: toggle
@@ -24,6 +24,40 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+    tinymce:
+      type: radio
+      label: PLUGIN_TINYMCE_EDITOR.TINYMCE
+      help: PLUGIN_TINYMCE_EDITOR.TINYMCE_HELP
+      classes: fancy
+      default: tinymce
+      options:
+        tinymce: TinyMCE 4.x
+        tinymce5: TinyMCE 5.x
+    restrictions:
+      type: checkboxes
+      label: PLUGIN_TINYMCE_EDITOR.RESTRICTIONS
+      help: PLUGIN_TINYMCE_EDITOR.RESTRICTIONS_HELP
+      default:
+        whitelist: false
+        blacklist: false
+      options:
+        whitelist: PLUGIN_TINYMCE_EDITOR.WHITELIST
+        blacklist: PLUGIN_TINYMCE_EDITOR.BLACKLIST
+      use: keys
+    whitelist:
+      type: textarea
+      yaml: true
+      label: PLUGIN_TINYMCE_EDITOR.WHITELIST
+      help: PLUGIN_TINYMCE_EDITOR.WHITELIST_HELP
+      validate:
+        type: yaml
+    blacklist:
+      type: textarea
+      yaml: true
+      label: PLUGIN_TINYMCE_EDITOR.BLACKLIST
+      help: PLUGIN_TINYMCE_EDITOR.BLACKLIST_HELP
+      validate:
+        type: yaml
     apikey:
       type: text
       label: PLUGIN_TINYMCE_EDITOR.API_KEY

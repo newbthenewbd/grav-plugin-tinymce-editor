@@ -1,3 +1,7 @@
+{% set version = config.plugins["tinymce-editor"].tinymce %}
+{% if version != "tinymce5" %}
+	{% set version = "tinymce" %}
+{% endif %}
 {% block label %}
 	{% if field.label %}
 		{% set hint = field.help ? 'data-hint="' ~ field.help|tu|raw ~ '"': '' %}
@@ -20,60 +24,118 @@
 	</div>
 	<script>
 		tinymce.init({
-			selector:"textarea.tinymce",
-			convert_urls:false,
-			document_base_url:$("[id=grav-dropzone]").attr("data-media-local")+"/../"+(""{% if context.modular %}+"../"{% endif %}),
-			language_url:"{{ url('user://data/tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '.js')|default(url('user://data/tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')|default(url('plugins://tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '.js')|default(url('plugins://tinymce-editor/js/tinymce/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')))) }}",
-			plugins:"{{ config.plugins["tinymce-editor"].plugins|join(" ")|e("js") }}",
+			selector: "textarea.tinymce",
+			convert_urls: false,
+			document_base_url: "{{ (uri.rootUrl(true) ~ admin.page.rawRoute)|e("js") }}/",
+			language: "{{ url('user://data/tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '.js')|default(url('user://data/tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')|default(url('plugins://tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '.js')|default(url('plugins://tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js'))))|split('/')|last|split('.')|first }}",
+			language_url: "{{ url('user://data/tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '.js')|default(url('user://data/tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')|default(url('plugins://tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '.js')|default(url('plugins://tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')))) }}",
+			contextmenu: false,
+			plugins: "{{ config.plugins["tinymce-editor"].plugins|join(" ")|e("js") }}",
 			{% for key in config.plugins["tinymce-editor"].parameters|keys %}
-				"{{ config.plugins["tinymce-editor"].parameters[key].name|e("js") }}":function(x) {
+				"{{ config.plugins["tinymce-editor"].parameters[key].name|e("js") }}": function(x) {
 					try{return JSON.parse(x)}catch(e){return x}
 				}("{{ config.plugins["tinymce-editor"].parameters[key].value|e("js") }}"),
 			{% endfor %}
-			menubar:{% if config.plugins["tinymce-editor"].menubar %}true{% else %}false{% endif %},
-			menu:{
+			menubar: {% if config.plugins["tinymce-editor"].menubar %}"{% for key in config.plugins["tinymce-editor"].menu|keys %}{{ config.plugins["tinymce-editor"].menu[key].title|lower|e("js") }} {% endfor %}"{% else %}false{% endif %},
+			menu: {
 				{% for key in config.plugins["tinymce-editor"].menu|keys %}
-					{{ key }}:{
-						title:"{{ config.plugins["tinymce-editor"].menu[key].title|e("js") }}",
-						items:"{{ config.plugins["tinymce-editor"].menu[key].items|e("js") }}"
+					"{{ config.plugins["tinymce-editor"].menu[key].title|lower|e("js") }}":{
+						title: "{{ config.plugins["tinymce-editor"].menu[key].title|e("js") }}",
+						items: "{{ config.plugins["tinymce-editor"].menu[key].items|e("js") }}"
 					},
 				{% endfor %}
 			},
-			toolbar:[
+			toolbar: [
 				{% for fields in config.plugins["tinymce-editor"].toolbar %}
 					{% for row in fields %}
 						'{{ row|e("js") }}',
 					{% endfor %}
 				{% endfor %}
 			],
-			branding:{% if config.plugins["tinymce-editor"].branding %}true{% else %}false{% endif %},
-			statusbar:{% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %}
-		});
-		$(window).on("load", function() {
-			$("div.dropzone").on("click", "a.dz-insert", function() {
-				var dir = $("[id=grav-dropzone]").attr("data-media-local")+"/";
-				var safedir = $("[id=grav-dropzone]").attr("data-media-path")+"/";
-				var src = $(this).parent().find("[data-dz-name]").text();
-				var file = new Image();
-				file.onload = function() {
-					$("[aria-label='Insert/edit image'] button").click();
-					$("div.mce-window input.mce-textbox:first").val(dir+src);
-				};
-				file.onerror = function() {
-					file = new Audio();
-					file.onload = function() {
-						tinyMCE.activeEditor.plugins.media.showDialog();
-						$("div.mce-window input.mce-textbox:first").val(dir+src);
-					};
-					file.onerror = function() {
-						$("[aria-label='Insert/edit link'] button").click();
-						$("div.mce-window input.mce-textbox:eq(1)").val(src);
-						$("div.mce-window input.mce-textbox:first").val(dir+src);
-					};
-					file.src = safedir+src;
-				};
-				file.src = safedir+src;
-			});
+			branding: {% if config.plugins["tinymce-editor"].branding %}true{% else %}false{% endif %},
+			statusbar: {% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %},
+			setup: function(editor) {
+				editor.on("init", (function() {
+					function insert(dir, src) {
+						var file = new Image();
+						file.src = dir+src;
+						file.onload = function() {
+							tinymce.execCommand("mceImage");
+							{% if version == "tinymce5" %}
+							var wait = setInterval(function() {
+								if($("div.tox-dialog input.tox-textfield:first").length) {
+									clearInterval(wait);
+									$("div.tox-dialog input.tox-textfield:first").val(src);
+								}
+							}, 10);
+							{% else %}
+							$("div.mce-window input.mce-textbox:first").val(src);
+							{% endif %}
+						};
+						file.onerror = function() {
+							file = new Audio();
+							file.src = dir+src;
+							file.ondurationchange = function() {
+								tinymce.execCommand("mceMedia");
+								{% if version == "tinymce5" %}
+								var wait = setInterval(function() {
+									if($("div.tox-dialog input.tox-textfield:first").length) {
+										clearInterval(wait);
+										$("div.tox-dialog input.tox-textfield:first").val(src);
+									}
+								}, 10);
+								{% else %}
+								$("div.mce-window input.mce-textbox:first").val(src);
+								{% endif %}
+							};
+							file.onerror = function() {
+								tinymce.execCommand("mceLink");
+								{% if version == "tinymce5" %}
+								var wait = setInterval(function() {
+									if($("div.tox-dialog input.tox-textfield:eq(1)").length) {
+										clearInterval(wait);
+										$("div.tox-dialog input.tox-textfield:eq(1)").val(src);
+										$("div.tox-dialog input.tox-textfield:first").val(src);
+									}
+								}, 10);
+								{% else %}
+								$("div.mce-window input.mce-textbox:eq(1)").val(src);
+								$("div.mce-window input.mce-textbox:first").val(src);
+								{% endif %}
+								return true;
+							};
+							return true;
+						};
+					}
+					$("div.dropzone").on("click", "a.dz-insert", function() {
+						insert($("#grav-dropzone").attr("data-media-path")+"/", encodeURIComponent($(this).parent().find("[data-dz-name]").text()));
+					});
+					var isMedia = 0;
+					var wasMedia = 0;
+					$("#grav-dropzone").on("dragstart", ".dz-preview", function(e) {
+						isMedia = 1;
+					});
+					editor.on("drop", function(e) {
+						if(isMedia) {
+							e.preventDefault();
+							e.stopPropagation();
+							var txt = encodeURIComponent(decodeURIComponent(e.dataTransfer.getData("text").split("(").pop()));
+							insert($("#grav-dropzone").attr("data-media-path")+"/", txt.substring(0, txt.length-1));
+							wasMedia = 1;
+						}
+					});
+					$("#grav-dropzone").on("dragend", ".dz-preview", function(e) {
+						isMedia = 0;
+					});
+					editor.on("PastePreProcess", function(e) {
+						if(wasMedia) {
+							e.content = "";
+							wasMedia = 0;
+						}
+					});
+				}));
+			},
+			{{ config.plugins["tinymce-editor"].evals|raw }}
 		});
 	</script>
 {% endblock %}
