@@ -15,7 +15,6 @@
 				{% if field.autofocus in ['on', 'true', 1] %}autofocus="autofocus"{% endif %}
 				{% if field.novalidate in ['on', 'true', 1] %}novalidate="novalidate"{% endif %}
 				{% if field.readonly in ['on', 'true', 1] %}readonly="readonly"{% endif %}
-				{% if field.validate.required in ['on', 'true', 1] %}required="required"{% endif %}
 			>{{ value|join("\n")|e("html") }}</textarea>
 		</div>
 	</div>

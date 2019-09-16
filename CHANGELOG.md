@@ -1,3 +1,11 @@
+# v1.2.7
+##  16-09-2019
+
+1. [](#improved)
+    * Updated TinyMCE to 4.9.6
+2. [](#bugfix)
+    * Fixed the handling of fields with `validate.required` set to true
+
 # v1.2.6
 ##  22-02-2019
 

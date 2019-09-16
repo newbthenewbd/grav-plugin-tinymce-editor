@@ -1,12 +1,12 @@
 # TinyMCE Editor Integration
 ![Screenshot](assets/tinymce-editor.png)  
-The **TinyMCE Editor Integration** is a state-of-the-art plugin, integrating the enterprise-grade [TinyMCE](https://www.tinymce.com/) WYSIWYG HTML Editor with the modern CMS [Grav](https://getgrav.org/) is.
+The **TinyMCE Editor Integration** is a state-of-the-art plugin, integrating the enterprise-grade [TinyMCE](https://www.tinymce.com/) WYSIWYG HTML editor with the modern CMS [Grav](https://getgrav.org/) is.
 
 Blabbing aside, this is the plugin that you should use when you're tired of, scared of, or otherwise not comfortable using Markdown to author your pages from within the [Grav Admin Plugin](https://github.com/getgrav/grav-plugin-admin). It's vastly configurable, so you should have no issues adapting it to your liking, and its default configuration has been made with consistency and ease of use in mind, significantly reducing the chance that you have to change anything at all.
 ## Installation
 There are two methods of installing the TinyMCE Editor Integration plugin, each of them available with the use of the admin plugin or manually.
 ### Installation with the use of the Grav Package Manager
-The simplest way to install this plugin is via the **Grav Package Manager (GPM)**. It can be used from within the admin plugin under **Plugins** > **Add**, or as a standalone executable accessible through your system's terminal (also called the command line).
+The simplest way to install this plugin is via the **Grav Package Manager (GPM)**. It can be used from within the admin plugin, or as a standalone executable accessible through your system's terminal (also called the command line).
 >#### Installation with the use of the admin plugin (Recommended)
 >In the admin plugin, go to **Plugins** > **Add** and enter the plugin's name there. When it is found, click the Install button next to it.
 >#### Installation with the use of a terminal
@@ -19,7 +19,7 @@ Either of these will install the TinyMCE Editor Integration plugin into your `/u
 ### Manual installation
 You may also decide that you want to install the plugin manually, which may prove very useful if you want to use the latest, unreleased features of the plugin.
 >#### Manual installation with the use of the admin plugin
->In the admin plugin, go to **Tools**, and paste the following into the textbox under **Install a zip package from a remote location**:
+>In the admin plugin, under **Configuration** > **System** > **Advanced** make sure that non-GPM direct installs are allowed, then go to **Tools** > **Direct install**, and paste the following into the textbox under **Install Package via Remote URL Reference**:
 >```
 >https://github.com/newbthenewbd/grav-plugin-tinymce-editor/archive/develop.zip
 >```
@@ -100,17 +100,17 @@ statusbar: true # If enabled, a status bar will be present at the bottom of the 
 ```
 When more customization is desired than the above options allow, you may create a directory called `tinymce-editor` in `/user/data`, and copy a subset of `/user/plugins/tinymce-editor` in there. The changes to the contents of that directory will be reflected in the plugin's behavior, and they will not be affected by updates. Currently supported subsets are the directories `blueprints`, `css`, `js/tinymce` and `templates`, and their entire contents should, when needed, be copied to `/user/data/tinymce-editor/blueprints`, `/user/data/tinymce-editor/css`, `/user/data/tinymce-editor/js/tinymce` and `/user/data/tinymce-editor/templates`, respectively.
 ## Usage
-**NOTE:** It is recommended to disable the Markdown parser in `/user/config/system.yaml` or under **Configuration** > **System** in the admin plugin to lower the resource usage once this plugin has been installed.
+**NOTE:** It is recommended to disable Markdown processing in `/user/config/system.yaml` or under **Configuration** > **System** > **Content** in the admin plugin to lower the resource usage once this plugin has been installed.
 
 The plugin itself is ready to be used out of the box, set up with a sensible default configuration. It will replace all the Markdown page editor fields in the admin plugin with TinyMCE.
 ## Credits
-Many thanks to everyone involved in the creation of [TinyMCE](https://github.com/tinymce/tinymce), the only FOSS HTML WYSIWYG editor that can actually do just what is expected of it with a little configuration. It is located under `/tinymce-editor/js/tinymce`, with all the languages available for it at the time of the latest integration plugin release installed under `/tinymce-editor/js/tinymce/langs`.
+Many thanks to everyone involved in the creation of [TinyMCE](https://github.com/tinymce/tinymce), the only FOSS WYSIWYG HTML editor that can actually do just what is expected of it with a little configuration.
 
-Huge thanks to the [Grav Slack Chat community](https://getgrav.org/slack) for providing help with Grav whenever possible, and to those involved in the creation of Grav, a CMS with an actually beautiful architecture.
+Huge thanks to the [Grav Chat community](https://getgrav.org/discord) for providing help with Grav whenever possible, and to those involved in the creation of Grav, a CMS with an actually beautiful architecture.
 
 Thanks to those the plugin was originally made for – my family with their websites – and to those others who may now use it as well.
 
-Last but not least, ~free tanks~ many thanks to [the very important person hiding behind this noble nickname on GitHub](https://github.com/Buttpants) for ~keeping sanity~ staying understanding while I've been unresponsive ~wasting a huge amount of time~ creating this plugin.
+Last but not least, ~three tanks~ many thanks to [the very important person hiding behind this noble nickname on GitHub](https://github.com/Buttpants) for ~keeping sanity~ staying understanding while I've been unresponsive ~wasting a huge amount of time~ creating this plugin.
 ## To Do
 - [ ] Add more translations to languages.yaml
 - [x] ???
