@@ -54,6 +54,7 @@
 			],
 			branding: {% if config.plugins["tinymce-editor"].branding %}true{% else %}false{% endif %},
 			statusbar: {% if config.plugins["tinymce-editor"].statusbar %}true{% else %}false{% endif %},
+			valid_elements : '{{ config.plugins["tinymce-editor"].valid_elements }}',
 			setup: function(editor) {
 				editor.on("init", (function() {
 					function insert(dir, src) {
