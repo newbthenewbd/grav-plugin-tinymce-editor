@@ -79,3 +79,4 @@ toolbar:
     row: 'formatselect | fontselect fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | indent outdent | forecolor backcolor | bullist numlist | superscript subscript | removeformat | fullscreen'
 branding: false
 statusbar: true
+valid_elements: ''
