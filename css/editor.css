@@ -1,1 +1,1 @@
-div.mce-fullscreen{top:67px!important}
+div.mce-fullscreen,div.tox-fullscreen{top:4.2rem!important;left:240px!important;width:calc(100% - 240px);padding-bottom:4.2rem}

@@ -9,6 +9,7 @@
 2. [](#improved)
     * Made dragging and dropping media into the editor actually work
     * Reworked how TinyMCE is initialized for minor performance gains
+    * Improved fullscreen handling
 3. [](#bugfix)
     * Fixed API key warnings when no key is entered
     * Suppressed the console warnings that appeared as the inserted media type was determined
