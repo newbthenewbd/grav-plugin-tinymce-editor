@@ -6,7 +6,7 @@ use Grav\Common\Plugin;
 
 class TinyMCEEditorPlugin extends Plugin {
 	public static function getSubscribedEvents() {
-		return ["onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentProcessed" => ["onPageContentProcessed", 0]];
+		return ["onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentRaw" => ["onPageContentRaw", 0]];
 	}
 	public function onPluginsInitialized() {
 		if($this->isAdmin()) {
@@ -69,16 +69,16 @@ class TinyMCEEditorPlugin extends Plugin {
 			}
 		}
 	}
-	public function onPageContentProcessed($event) {
+	public function onPageContentRaw($event) {
 		$page = $event["page"];
 		if(!$this->isAdmin() && $page->getRawContent() != "") {
 			$excerpts = new Excerpts($page);
-			$dir = $this->grav["uri"]->rootUrl() . $page->rawRoute() . "/";
 			$dom = new \DOMDocument("1.0", "UTF-8");
 			@$dom->loadHTML(mb_convert_encoding($page->getRawContent(), "HTML-ENTITIES", "UTF-8"), LIBXML_PARSEHUGE);
 			foreach($dom->getElementsByTagName("img") as $tag) {
 				$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
-				$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
+				$excerpt["element"]["attributes"]["src"] = $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"];
+				$tag->setAttribute("src", $excerpts->processImageExcerpt($excerpt)["element"]["attributes"]["src"]);
 			}
 			foreach($dom->getElementsByTagName("audio") as $tag) {
 				$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
