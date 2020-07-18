@@ -2,7 +2,7 @@
 ##  XX-07-2020
 
 1. [](#new)
-    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - previously inserted media will keep working**
+    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - previously inserted media will keep working, but may show up erroneously in the editor**
     * Added support for TinyMCE 5.x - now supporting versions 4.9.11 and 5.4.1
     * Added a whitelist and a blacklist for customizing on which pages TinyMCE is used
     * Added the `evals` field for advanced TinyMCE parameters, only modifiable in `tinymce-editor.yaml`
