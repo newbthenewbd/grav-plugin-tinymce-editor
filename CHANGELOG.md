@@ -1,8 +1,8 @@
 # v1.3.0
-##  XX-09-2019
+##  XX-07-2020
 
 1. [](#new)
-    * **Deprecated the semi-absolute media path handling in favor of fully relative paths** - previously inserted media **will keep working**
+    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - previously inserted media will keep working**
     * Added support for TinyMCE 5.x - now supporting the versions 4.9.6 and 5.0.15
     * Added a whitelist and a blacklist for customizing on which pages TinyMCE is used
     * Added the `evals` field for advanced TinyMCE parameters, only modifyable in `tinymce-editor.yaml`
@@ -10,6 +10,7 @@
     * Made dragging and dropping media into the editor actually work
     * Reworked how TinyMCE is initialized for minor performance gains
 3. [](#bugfix)
+    * Fixed API key warnings when no key is entered
     * Suppressed the console warnings that appeared as the inserted media type was determined
 
 # v1.2.7

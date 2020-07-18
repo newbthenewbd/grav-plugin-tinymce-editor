@@ -27,7 +27,7 @@ class TinyMCEEditorPlugin extends Plugin {
 			if($version != "tinymce5") {
 				$version = "tinymce";
 			}
-			if($this->config["plugins"]["tinymce-editor"]["apikey"] === "") {
+			if($this->config["plugins"]["tinymce-editor"]["apikey"] == "") {
 				if(file_exists(__DIR__ . "/../../data/tinymce-editor/js/" . $version)) {
 					$this->grav["assets"]->add("user://data/tinymce-editor/js/" . $version . "/tinymce.min.js");
 				} else {

@@ -15,7 +15,7 @@ blacklist:
   filter:
     published: true
     non-published: true
-apikey: ''
+apikey: null
 plugins:
   - advlist
   - anchor
