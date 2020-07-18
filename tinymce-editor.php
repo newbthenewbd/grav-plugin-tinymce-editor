@@ -6,7 +6,7 @@ use Grav\Common\Plugin;
 
 class TinyMCEEditorPlugin extends Plugin {
 	public static function getSubscribedEvents() {
-		return ["onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentRaw" => ["onPageContentRaw", 0]];
+		return ["onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentProcessed" => ["onPageContentProcessed", 0]];
 	}
 	public function onPluginsInitialized() {
 		if($this->isAdmin()) {
@@ -69,7 +69,7 @@ class TinyMCEEditorPlugin extends Plugin {
 			}
 		}
 	}
-	public function onPageContentRaw($event) {
+	public function onPageContentProcessed($event) {
 		$page = $event["page"];
 		if(!$this->isAdmin() && $page->getRawContent() != "") {
 			$excerpts = new Excerpts($page);
