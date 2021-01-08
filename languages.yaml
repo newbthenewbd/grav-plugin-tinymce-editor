@@ -1,7 +1,5 @@
 en:
   PLUGIN_TINYMCE_EDITOR:
-    TINYMCE: "TinyMCE version"
-    TINYMCE_HELP: "The default version of TinyMCE to be used in the page editor."
     RESTRICTIONS: "Restrictions"
     RESTRICTIONS_HELP: "The restrictions to apply when specifying the pages in the page editor to enable TinyMCE on."
     WHITELIST: "Whitelist"
@@ -26,8 +24,6 @@ en:
     STATUS_BAR_HELP: "If enabled, a status bar will be present at the bottom of the editor"
 pl:
   PLUGIN_TINYMCE_EDITOR:
-    TINYMCE: Wersja TinyMCE
-    TINYMCE_HELP: "Domyślna wersja TinyMCE do użycia w edytorze stron."
     RESTRICTIONS: "Ograniczenia"
     RESTRICTIONS_HELP: "Ograniczenia, jakie będą użyte przy określaniu stron, do których edycji zostanie użyty TinyMCE."
     WHITELIST: "Biała lista"

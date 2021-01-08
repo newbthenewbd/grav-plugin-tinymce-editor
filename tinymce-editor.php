@@ -6,7 +6,50 @@ use Grav\Common\Plugin;
 
 class TinyMCEEditorPlugin extends Plugin {
 	public static function getSubscribedEvents() {
-		return ["onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentProcessed" => ["onPageContentProcessed", 0]];
+		return ["onAdminSave" => ["onAdminSave", 0], "onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentProcessed" => ["onPageContentProcessed", 0]];
+	}
+	public function onAdminSave($event) {
+		$page = $event["object"];
+		if($page instanceof Page && $page->folder() != $page->getOriginal()->folder() && $page->rawMarkdown() != "") {
+			$newdir = explode(".", $page->folder());
+			$newdir = $this->grav["uri"]->rootUrl() . $page->parent()->route() . "/" . end($newdir) . "/";
+			$dom = new \DOMDocument("1.0", "UTF-8");
+			@$dom->loadHTML(mb_convert_encoding($page->rawMarkdown(), "HTML-ENTITIES", "UTF-8"), LIBXML_PARSEHUGE);
+			foreach($page->getOriginal()->media()->all() as $key => $value) {
+				foreach($dom->getElementsByTagName("img") as $tag) {
+					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
+						$tag->setAttribute("src", $newdir . $key . $query);
+					}
+				}
+				foreach($dom->getElementsByTagName("source") as $tag) {
+					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
+						$tag->setAttribute("src", $newdir . $key . $query);
+					}
+				}
+				foreach($dom->getElementsByTagName("a") as $tag) {
+					$query = parse_url($tag->getAttribute("href"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("href") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
+						$tag->setAttribute("href", $newdir . $key . $query);
+					}
+				}
+			}
+			$html = "";
+			foreach($dom->getElementsByTagname("body")[0]->childNodes as $node) {
+				$html .= $dom->saveHTML($node);
+			}
+			$page->rawMarkdown($html);
+		}
 	}
 	public function onPluginsInitialized() {
 		if($this->isAdmin()) {
@@ -23,20 +66,15 @@ class TinyMCEEditorPlugin extends Plugin {
 	public function onTwigSiteVariables() {
 		if($this->isAdmin()) {
 			$page = $this->grav["admin"]->page();
-			$version = $this->config["plugins"]["tinymce-editor"]["tinymce"];
-			if($version != "tinymce5") {
-				$version = "tinymce";
-			}
+			$version = "tinymce";
 			if($this->config["plugins"]["tinymce-editor"]["apikey"] == "") {
 				if(file_exists(__DIR__ . "/../../data/tinymce-editor/js/" . $version)) {
 					$this->grav["assets"]->add("user://data/tinymce-editor/js/" . $version . "/tinymce.min.js");
 				} else {
 					$this->grav["assets"]->add("plugin://tinymce-editor/js/" . $version . "/tinymce.min.js");
 				}
-			} else if($version == "tinymce") {
-				$this->grav["assets"]->add("https://cloud.tinymce.com/4/tinymce.min.js?apiKey=" . urlencode($this->config["plugins"]["tinymce-editor"]["apikey"]));
 			} else {
-				$this->grav["assets"]->add("https://cloud.tinymce.com/5/tinymce.min.js?apiKey=" . urlencode($this->config["plugins"]["tinymce-editor"]["apikey"]));
+				$this->grav["assets"]->add("https://cloud.tinymce.com/4/tinymce.min.js?apiKey=" . urlencode($this->config["plugins"]["tinymce-editor"]["apikey"]));
 			}
 			if(file_exists(__DIR__ . "/../../data/tinymce-editor/css")) {
 				$this->grav["assets"]->add("user://data/tinymce-editor/css/editor.css");

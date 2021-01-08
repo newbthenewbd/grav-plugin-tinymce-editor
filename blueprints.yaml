@@ -24,15 +24,6 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    tinymce:
-      type: radio
-      label: PLUGIN_TINYMCE_EDITOR.TINYMCE
-      help: PLUGIN_TINYMCE_EDITOR.TINYMCE_HELP
-      classes: fancy
-      default: tinymce
-      options:
-        tinymce: TinyMCE 4.x
-        tinymce5: TinyMCE 5.x
     restrictions:
       type: checkboxes
       label: PLUGIN_TINYMCE_EDITOR.RESTRICTIONS

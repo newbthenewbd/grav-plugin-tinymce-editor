@@ -1,7 +1,4 @@
-{% set version = config.plugins["tinymce-editor"].tinymce %}
-{% if version != "tinymce5" %}
-	{% set version = "tinymce" %}
-{% endif %}
+{% set version = "tinymce" %}
 {% block label %}
 	{% if field.label %}
 		{% set hint = field.help ? 'data-hint="' ~ field.help|tu|raw ~ '"': '' %}
@@ -61,47 +58,19 @@
 						file.src = dir+src;
 						file.onload = function() {
 							tinymce.execCommand("mceImage");
-							{% if version == "tinymce5" %}
-							var wait = setInterval(function() {
-								if($("div.tox-dialog input.tox-textfield:first").length) {
-									clearInterval(wait);
-									$("div.tox-dialog input.tox-textfield:first").val(src);
-								}
-							}, 10);
-							{% else %}
 							$("div.mce-window input.mce-textbox:first").val(src);
-							{% endif %}
 						};
 						file.onerror = function() {
 							file = new Audio();
 							file.src = dir+src;
 							file.ondurationchange = function() {
 								tinymce.execCommand("mceMedia");
-								{% if version == "tinymce5" %}
-								var wait = setInterval(function() {
-									if($("div.tox-dialog input.tox-textfield:first").length) {
-										clearInterval(wait);
-										$("div.tox-dialog input.tox-textfield:first").val(src);
-									}
-								}, 10);
-								{% else %}
 								$("div.mce-window input.mce-textbox:first").val(src);
-								{% endif %}
 							};
 							file.onerror = function() {
 								tinymce.execCommand("mceLink");
-								{% if version == "tinymce5" %}
-								var wait = setInterval(function() {
-									if($("div.tox-dialog input.tox-textfield:eq(1)").length) {
-										clearInterval(wait);
-										$("div.tox-dialog input.tox-textfield:eq(1)").val(src);
-										$("div.tox-dialog input.tox-textfield:first").val(src);
-									}
-								}, 10);
-								{% else %}
 								$("div.mce-window input.mce-textbox:eq(1)").val(src);
 								$("div.mce-window input.mce-textbox:first").val(src);
-								{% endif %}
 								return true;
 							};
 							return true;
@@ -133,6 +102,19 @@
 							wasMedia = 0;
 						}
 					});
+					if(!tinymce.settings.allow_html_data_urls && !tinymce.settings.allow_svg_data_urls) {
+						editor.parser.addNodeFilter("embed,iframe,object", function(nodes) {
+							nodes.forEach(function(node) {
+								if(node.attributes) {
+									node.attributes.forEach(function(attr) {
+										if(/^data:/i.test(attr.value)) {
+											node.attr(attr.name, "");
+										}
+									});
+								}
+							});
+						});
+					}
 				}));
 			},
 			{{ config.plugins["tinymce-editor"].evals|raw }}

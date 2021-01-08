@@ -1,18 +1,20 @@
 # v1.3.0
-##  XX-07-2020
+##  XX-01-2021
 
 1. [](#new)
-    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - previously inserted media will keep working, but may show up erroneously in the editor**
-    * Added support for TinyMCE 5.x - now supporting versions 4.9.11 and 5.4.1
+    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - existing media will keep working on pages, but issues with its rendering may occur in the editor, and the function that automatically updates media URLs is scheduled for removal in v2.0.0**
+    * **Deprecated processing Twig inside the HTML attributes used for media URLs without `twig_first: true` set - starting with v2.0.0, `twig_first` will have to be set to `true` and `never_cache_twig` to `false` on pages using Twig in the composition of HTML media URL attributes; for relative media paths, this change is effective immediately**
+    * Updated TinyMCE to 4.9.11
     * Added a whitelist and a blacklist for customizing on which pages TinyMCE is used
-    * Added the `evals` field for advanced TinyMCE parameters, only modifiable in `tinymce-editor.yaml`
+    * Added the `evals` field for advanced TinyMCE parameters, only modifiable directly in `tinymce-editor.yaml`
 2. [](#improved)
-    * Made dragging and dropping media into the editor actually work
+    * Made dragging and dropping media into the editor work
     * Reworked how TinyMCE is initialized for minor performance gains
     * Improved fullscreen handling
 3. [](#bugfix)
     * Fixed API key warnings when no key is entered
     * Suppressed the console warnings that appeared as the inserted media type was determined
+    * Worked around the GHSA-w7jx-j77m-wp65 vulnerability in TinyMCE
 
 # v1.2.7
 ##  16-09-2019

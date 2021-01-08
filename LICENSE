@@ -1,7 +1,7 @@
-All the files bundled with this license, with the exception of the "tinymce" and "tinymce5" directories located inside the "js" directory as well as their contents, are subject to the following terms:
+All the files bundled with this license, with the exception of the "tinymce" directory located inside the "js" directory as well as its contents, are subject to the following terms:
 	The MIT License (MIT)
 
-	Copyright (c) 2019 Czcibor Bohusz-Dobosz
+	Copyright (c) 2021 Czcibor Bohusz-Dobosz
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -21,4 +21,4 @@ All the files bundled with this license, with the exception of the "tinymce" and
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 
-The license that applies to the above-mentioned "tinymce" and "tinymce5" directories and their contents should be available for reading inside the respective directories.
+The licenses that apply to the above-mentioned "tinymce" directory and its contents should be available for reading inside the directory.
