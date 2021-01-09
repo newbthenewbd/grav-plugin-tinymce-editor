@@ -1,6 +1,7 @@
 <?php
 namespace Grav\Plugin;
 
+use Grav\Common\Page\Page;
 use Grav\Common\Page\Markdown\Excerpts;
 use Grav\Common\Plugin;
 
@@ -17,6 +18,15 @@ class TinyMCEEditorPlugin extends Plugin {
 			@$dom->loadHTML(mb_convert_encoding($page->rawMarkdown(), "HTML-ENTITIES", "UTF-8"), LIBXML_PARSEHUGE);
 			foreach($page->getOriginal()->media()->all() as $key => $value) {
 				foreach($dom->getElementsByTagName("img") as $tag) {
+					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key) . $query) {
+						$tag->setAttribute("src", $newdir . $key . $query);
+					}
+				}
+				foreach($dom->getElementsByTagName("audio") as $tag) {
 					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
 					if($query != NULL) {
 						$query = "?" . $query;
@@ -44,11 +54,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					}
 				}
 			}
-			$html = "";
-			foreach($dom->getElementsByTagname("body")[0]->childNodes as $node) {
-				$html .= $dom->saveHTML($node);
-			}
-			$page->rawMarkdown($html);
+			$page->rawMarkdown(simplexml_import_dom($dom->getElementsByTagname("body")[0])->asXML());
 		}
 	}
 	public function onPluginsInitialized() {

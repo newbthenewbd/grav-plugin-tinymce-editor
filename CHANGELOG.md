@@ -2,7 +2,7 @@
 ##  XX-01-2021
 
 1. [](#new)
-    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - existing media will keep working on pages, but issues with its rendering may occur in the editor, and the function that automatically updates media URLs is scheduled for removal in v2.0.0**
+    * **Deprecated the semi-absolute media path handling in favor of fully relative paths - existing media will keep working on pages, but issues with its rendering may occur in the editor, and the function that automatically updates absolute URLs of media is scheduled for removal in v2.0.0**
     * **Deprecated processing Twig inside the HTML attributes used for media URLs without `twig_first: true` set - starting with v2.0.0, `twig_first` will have to be set to `true` and `never_cache_twig` to `false` on pages using Twig in the composition of HTML media URL attributes; for relative media paths, this change is effective immediately**
     * Updated TinyMCE to 4.9.11
     * Added a whitelist and a blacklist for customizing on which pages TinyMCE is used
