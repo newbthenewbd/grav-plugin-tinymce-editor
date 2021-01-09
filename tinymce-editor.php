@@ -21,7 +21,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key . $query)) {
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key) . $query) {
 						$tag->setAttribute("src", $newdir . $key . $query);
 					}
 				}
@@ -30,7 +30,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key . $query)) {
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key) . $query) {
 						$tag->setAttribute("src", $newdir . $key . $query);
 					}
 				}
@@ -39,7 +39,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("href") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key . $query)) {
+					if($tag->getAttribute("href") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key) . $query) {
 						$tag->setAttribute("href", $newdir . $key . $query);
 					}
 				}
@@ -119,7 +119,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == urlencode($key . $query)) {
+					if($tag->getAttribute("src") == urlencode($key) . $query) {
 						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
 						$excerpt["element"]["attributes"]["src"] = $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"];
 						$tag->setAttribute("src", $excerpts->processImageExcerpt($excerpt)["element"]["attributes"]["src"]);
@@ -130,7 +130,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == urlencode($key . $query)) {
+					if($tag->getAttribute("src") == urlencode($key) . $query) {
 						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
 						$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
 					}
@@ -140,7 +140,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == urlencode($key . $query)) {
+					if($tag->getAttribute("src") == urlencode($key) . $query) {
 						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
 						$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
 					}
@@ -150,7 +150,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("href") == urlencode($key . $query)) {
+					if($tag->getAttribute("href") == urlencode($key) . $query) {
 						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("href")]]];
 						$tag->setAttribute("href", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
 					}
