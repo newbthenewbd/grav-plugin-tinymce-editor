@@ -1,5 +1,5 @@
 # v1.3.0
-##  XX-01-2021
+##  09-01-2021
 
 1. [](#new)
     * **Deprecated the semi-absolute media path handling in favor of fully relative paths - existing media will keep working on pages, but issues with its rendering may occur in the editor, and the function that automatically updates absolute URLs of media is scheduled for removal in v2.0.0**
