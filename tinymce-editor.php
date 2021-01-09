@@ -21,7 +21,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key . $query)) {
 						$tag->setAttribute("src", $newdir . $key . $query);
 					}
 				}
@@ -30,7 +30,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
+					if($tag->getAttribute("src") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key . $query)) {
 						$tag->setAttribute("src", $newdir . $key . $query);
 					}
 				}
@@ -39,7 +39,7 @@ class TinyMCEEditorPlugin extends Plugin {
 					if($query != NULL) {
 						$query = "?" . $query;
 					}
-					if($tag->getAttribute("href") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . $key . $query) {
+					if($tag->getAttribute("href") == $this->grav["uri"]->rootUrl() . $page->getOriginal()->route() . "/" . urlencode($key . $query)) {
 						$tag->setAttribute("href", $newdir . $key . $query);
 					}
 				}
@@ -113,28 +113,51 @@ class TinyMCEEditorPlugin extends Plugin {
 			$excerpts = new Excerpts($page);
 			$dom = new \DOMDocument("1.0", "UTF-8");
 			@$dom->loadHTML(mb_convert_encoding($page->getRawContent(), "HTML-ENTITIES", "UTF-8"), LIBXML_PARSEHUGE);
-			foreach($dom->getElementsByTagName("img") as $tag) {
-				$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
-				$excerpt["element"]["attributes"]["src"] = $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"];
-				$tag->setAttribute("src", $excerpts->processImageExcerpt($excerpt)["element"]["attributes"]["src"]);
+			foreach($page->media()->all() as $key => $value) {
+				foreach($dom->getElementsByTagName("img") as $tag) {
+					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("src") == urlencode($key . $query)) {
+						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
+						$excerpt["element"]["attributes"]["src"] = $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"];
+						$tag->setAttribute("src", $excerpts->processImageExcerpt($excerpt)["element"]["attributes"]["src"]);
+					}
+				}
+				foreach($dom->getElementsByTagName("audio") as $tag) {
+					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("src") == urlencode($key . $query)) {
+						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
+						$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
+					}
+				}
+				foreach($dom->getElementsByTagName("source") as $tag) {
+					$query = parse_url($tag->getAttribute("src"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("src") == urlencode($key . $query)) {
+						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
+						$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
+					}
+				}
+				foreach($dom->getElementsByTagName("a") as $tag) {
+					$query = parse_url($tag->getAttribute("href"), PHP_URL_QUERY);
+					if($query != NULL) {
+						$query = "?" . $query;
+					}
+					if($tag->getAttribute("href") == urlencode($key . $query)) {
+						$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("href")]]];
+						$tag->setAttribute("href", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
+					}
+				}
 			}
-			foreach($dom->getElementsByTagName("audio") as $tag) {
-				$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
-				$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
-			}
-			foreach($dom->getElementsByTagName("source") as $tag) {
-				$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("src")]]];
-				$tag->setAttribute("src", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
-			}
-			foreach($dom->getElementsByTagName("a") as $tag) {
-				$excerpt = ["element" => ["attributes" => ["href" => $tag->getAttribute("href")]]];
-				$tag->setAttribute("href", $excerpts->processLinkExcerpt($excerpt)["element"]["attributes"]["href"]);
-			}
-			$html = "";
-			foreach($dom->getElementsByTagname("body")[0]->childNodes as $node) {
-				$html .= $dom->saveHTML($node);
-			}
-			$page->setRawContent($html);
+			$page->setRawContent(simplexml_import_dom($dom->getElementsByTagname("body")[0])->asXML());
+			
 		}
 	}
 }
