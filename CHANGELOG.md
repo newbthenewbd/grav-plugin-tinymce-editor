@@ -1,3 +1,9 @@
+# v1.3.1
+##  12-01-2021
+
+1. [](#bugfix)
+    * Fixed the handling of HTML void elements
+
 # v1.3.0
 ##  09-01-2021
 
