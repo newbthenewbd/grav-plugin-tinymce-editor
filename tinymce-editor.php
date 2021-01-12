@@ -6,6 +6,16 @@ use Grav\Common\Page\Markdown\Excerpts;
 use Grav\Common\Plugin;
 
 class TinyMCEEditorPlugin extends Plugin {
+	private $terminated = array("area", "base", "basefont", "bgsound", "br", "col", "command", "embed", "frame", "hr", "image", "img", "input", "isindex", "keygen", "link", "menuitem", "meta", "nextid", "param", "source", "track", "wbr");
+	private function fixNodes(\DOMNode $node) {
+		if($node->hasChildNodes()) {
+			foreach($node->childNodes as $child) {
+				$this->fixNodes($child);
+			}
+		} else if(!in_array(strtolower($node->nodeName), $this->terminated)) {
+			$node->appendChild(new \DOMText(""));
+		}
+	}
 	public static function getSubscribedEvents() {
 		return ["onAdminSave" => ["onAdminSave", 0], "onPluginsInitialized" => ["onPluginsInitialized", 0], "onTwigSiteVariables" => ["onTwigSiteVariables", 0], "onPageContentProcessed" => ["onPageContentProcessed", 0]];
 	}
@@ -54,7 +64,12 @@ class TinyMCEEditorPlugin extends Plugin {
 					}
 				}
 			}
-			$page->rawMarkdown(simplexml_import_dom($dom->getElementsByTagname("body")[0])->asXML());
+			$html = "";
+			foreach($dom->getElementsByTagname("body")[0]->childNodes as $node) {
+				$this->fixNodes($node);
+				$html .= $dom->saveXML($node);
+			}
+			$page->rawMarkdown($html);
 		}
 	}
 	public function onPluginsInitialized() {
@@ -162,8 +177,12 @@ class TinyMCEEditorPlugin extends Plugin {
 					}
 				}
 			}
-			$page->setRawContent(simplexml_import_dom($dom->getElementsByTagname("body")[0])->asXML());
-			
+			$html = "";
+			foreach($dom->getElementsByTagname("body")[0]->childNodes as $node) {
+				$this->fixNodes($node);
+				$html .= $dom->saveXML($node);
+			}
+			$page->setRawContent($html);
 		}
 	}
 }
