@@ -5,7 +5,7 @@ en:
     WHITELIST: "Whitelist"
     WHITELIST_HELP: The collection of pages to enable TinyMCE on.
     BLACKLIST: "Blacklist"
-    WHITELIST_HELP: The collection of pages to disable TinyMCE on, even if they are whitelisted.
+    BLACKLIST_HELP: The collection of pages to disable TinyMCE on, even if they are whitelisted.
     API_KEY: "API key"
     API_KEY_HELP: "The API key to use with TinyMCE Cloud. If empty, local copy of TinyMCE will be used"
     PLUGINS_HELP: "The plugins to load with TinyMCE"
