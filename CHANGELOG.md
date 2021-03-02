@@ -1,3 +1,9 @@
+# v1.3.3
+##  02-03-2021
+
+1. [](#bugfix)
+    * Worked around an error while saving a page in a new language without Flex Pages
+
 # v1.3.2
 ##  16-01-2021
 

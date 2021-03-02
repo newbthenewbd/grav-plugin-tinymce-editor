@@ -21,7 +21,7 @@ class TinyMCEEditorPlugin extends Plugin {
 	}
 	public function onAdminSave($event) {
 		$page = $event["object"];
-		if($page instanceof Page && $page->folder() != $page->getOriginal()->folder() && $page->rawMarkdown() != "") {
+		if($page instanceof Page && $page->getOriginal() instanceof Page && $page->folder() != $page->getOriginal()->folder() && $page->rawMarkdown() != "") {
 			$newdir = explode(".", $page->folder());
 			$newdir = $this->grav["uri"]->rootUrl() . $page->parent()->route() . "/" . end($newdir) . "/";
 			$dom = new \DOMDocument("1.0", "UTF-8");
