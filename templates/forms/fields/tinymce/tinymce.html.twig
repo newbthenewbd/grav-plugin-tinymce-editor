@@ -21,7 +21,7 @@
 	</div>
 	<script>
 		tinymce.init({
-			selector: "textarea.tinymce",
+			selector: "textarea[name=\"{{ (scope ~ field.name)|fieldName }}\"]",
 			convert_urls: false,
 			document_base_url: "{{ (uri.rootUrl(true) ~ admin.page.rawRoute)|e("js") }}/",
 			language: "{{ url('user://data/tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '.js')|default(url('user://data/tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js')|default(url('plugins://tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '.js')|default(url('plugins://tinymce-editor/js/' ~ version ~ '/langs/' ~ grav.user.language ~ '_' ~ (grav.user.language|upper) ~ '.js'))))|split('/')|last|split('.')|first }}",
